@@ -1,24 +1,607 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modo Carreira</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modo Carreira</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#07100b;
+    color:white;
+    min-height:100vh;
+}
+
+header{
+    background:#0d1b12;
+    padding:18px;
+    border-bottom:1px solid #26392c;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+header h1{
+    font-size:22px;
+}
+
+header p{
+    color:#9eaaa1;
+    margin-top:5px;
+    font-size:13px;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:#101b14;
+    border:1px solid #26392c;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:16px;
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+
+.hero{
+    text-align:center;
+    padding:45px 20px;
+}
+
+.hero .ball{
+    font-size:55px;
+    margin-bottom:15px;
+}
+
+.hero h2{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    color:#aeb8b0;
+    margin-bottom:25px;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:13px 18px;
+    background:#21c55d;
+    color:#041008;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px;
+}
+
+button:hover{
+    filter:brightness(1.08);
+}
+
+button.secondary{
+    background:#1d2b22;
+    color:white;
+    border:1px solid #33473a;
+}
+
+input,select{
+    width:100%;
+    padding:13px;
+    margin-top:8px;
+    margin-bottom:15px;
+    border-radius:9px;
+    border:1px solid #34473a;
+    background:#09110c;
+    color:white;
+    font-size:15px;
+}
+
+label{
+    color:#b9c3bc;
+    font-size:14px;
+}
+
+.club-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:15px;
+}
+
+.club{
+    background:#0b150e;
+    border:1px solid #33473a;
+    padding:18px;
+    border-radius:12px;
+    cursor:pointer;
+}
+
+.club:hover{
+    border-color:#21c55d;
+}
+
+.club.selected{
+    border:2px solid #21c55d;
+    background:#122319;
+}
+
+.club strong{
+    display:block;
+    margin-bottom:6px;
+}
+
+.club small{
+    color:#98a59b;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+
+.stat{
+    text-align:center;
+    background:#0b150e;
+    border-radius:10px;
+    padding:13px;
+}
+
+.stat b{
+    display:block;
+    font-size:22px;
+    margin-bottom:4px;
+}
+
+.stat span{
+    color:#9da89f;
+    font-size:12px;
+}
+
+.nav{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    margin-bottom:15px;
+}
+
+.nav button{
+    background:#142219;
+    color:#dce5de;
+    border:1px solid #2d4033;
+    padding:11px 5px;
+    font-size:12px;
+}
+
+.section{
+    display:none;
+}
+
+.section.active{
+    display:block;
+}
+
+.event{
+    display:flex;
+    justify-content:space-between;
+    padding:13px 0;
+    border-bottom:1px solid #24342a;
+}
+
+.event:last-child{
+    border-bottom:0;
+}
+
+.good{
+    color:#38d76b;
+}
+
+.warning{
+    color:#f4c95d;
+}
+
+.danger{
+    color:#ff7373;
+}
+
+.big{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.progress{
+    background:#1b2920;
+    height:10px;
+    border-radius:20px;
+    overflow:hidden;
+    margin:10px 0;
+}
+
+.progress div{
+    height:100%;
+    background:#21c55d;
+}
+
+.calendar{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+    margin-top:12px;
+}
+
+.day{
+    min-height:42px;
+    padding:6px;
+    background:#0b150e;
+    border-radius:6px;
+    font-size:11px;
+}
+
+.matchday{
+    background:#1d5d34;
+    font-weight:bold;
+}
+
+.chat{
+    min-height:180px;
+    max-height:300px;
+    overflow:auto;
+    background:#09110c;
+    border-radius:10px;
+    padding:12px;
+    margin-bottom:10px;
+}
+
+.message{
+    padding:9px 11px;
+    border-radius:10px;
+    margin-bottom:8px;
+    max-width:85%;
+}
+
+.npc{
+    background:#1a2820;
+}
+
+.player{
+    background:#145b31;
+    margin-left:auto;
+}
+
+.hidden{
+    display:none;
+}
+
+@media(max-width:600px){
+    .club-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .nav{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .hero h2{
+        font-size:26px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <h1>Modo Carreira</h1>
+<header>
+    <h1>⚽ MODO CARREIRA</h1>
+    <p id="headerInfo">Sua carreira começa aos 15 anos</p>
+</header>
 
-    <p>Seu jogo de carreira de futebol começa aqui.</p>
+<div class="container">
 
-    <button onclick="iniciarJogo()">INICIAR JOGO</button>
+<!-- INÍCIO -->
+<section id="inicio" class="section active">
+    <div class="card hero">
+        <div class="ball">⚽</div>
+        <h2>Modo Carreira</h2>
+        <p>Construa sua carreira no futebol desde a base até o auge.</p>
+        <button onclick="mostrarCriacao()">INICIAR CARREIRA</button>
+    </div>
+</section>
 
-    <script>
-        function iniciarJogo() {
-            alert("Carreira iniciada!");
-        }
-    </script>
+<!-- CRIAÇÃO -->
+<section id="criacao" class="section">
+    <div class="card">
+        <h2>Crie seu jogador</h2>
+        <br>
 
-</body>
-</html>
+        <label>Nome do jogador</label>
+        <input id="nome" placeholder="Digite seu nome">
+
+        <label>Sexo</label>
+        <select id="sexo">
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+        </select>
+
+        <div class="card">
+            <strong>Idade inicial</strong>
+            <p style="margin-top:8px;color:#9da89f">
+                Sua carreira começa automaticamente aos 15 anos.
+            </p>
+        </div>
+
+        <h3>Escolha sua base</h3>
+        <p style="color:#9da89f;margin-top:5px">
+            Você começará em uma equipe de 2ª ou 3ª divisão.
+        </p>
+
+        <div class="club-grid">
+            <div class="club" onclick="selecionarClube(this,'Blackburn Rovers')">
+                <strong>🏴 Blackburn Rovers</strong>
+                <small>Inglaterra • Championship</small>
+            </div>
+
+            <div class="club" onclick="selecionarClube(this,'Middlesbrough')">
+                <strong>🏴 Middlesbrough</strong>
+                <small>Inglaterra • Championship</small>
+            </div>
+
+            <div class="club" onclick="selecionarClube(this,'Real Zaragoza')">
+                <strong>🇪🇸 Real Zaragoza</strong>
+                <small>Espanha • 2ª divisão</small>
+            </div>
+
+            <div class="club" onclick="selecionarClube(this,'Real Oviedo')">
+                <strong>🇪🇸 Real Oviedo</strong>
+                <small>Espanha • 2ª divisão</small>
+            </div>
+        </div>
+
+        <br>
+        <button onclick="começarCarreira()">COMEÇAR CARREIRA</button>
+    </div>
+</section>
+
+<!-- CARREIRA -->
+<section id="carreira" class="section">
+
+    <div class="card">
+        <h2 id="playerName">Jogador</h2>
+        <p id="clubName">Clube</p>
+        <br>
+
+        <div class="stats">
+            <div class="stat">
+                <b id="idade">15</b>
+                <span>IDADE</span>
+            </div>
+
+            <div class="stat">
+                <b id="overall">58</b>
+                <span>OVERALL</span>
+            </div>
+
+            <div class="stat">
+                <b id="potencial">82</b>
+                <span>POTENCIAL</span>
+            </div>
+
+            <div class="stat">
+                <b id="temporada">1</b>
+                <span>TEMPORADA</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <button onclick="abrirAba('resumo')">🏠 Resumo</button>
+        <button onclick="abrirAba('treino')">🏃 Treino</button>
+        <button onclick="abrirAba('calendario')">📅 Calendário</button>
+        <button onclick="abrirAba('conversas')">💬 Conversas</button>
+    </div>
+
+    <div class="nav">
+        <button onclick="avancar('dia')">+ 1 Dia</button>
+        <button onclick="avancar('semana')">+ 1 Semana</button>
+        <button onclick="avancar('mes')">+ 1 Mês</button>
+        <button onclick="avancar('ano')">+ 1 Ano</button>
+    </div>
+
+    <!-- RESUMO -->
+    <div id="resumo" class="section active">
+
+        <div class="card">
+            <h3>📊 Desenvolvimento</h3>
+            <p style="color:#9da89f;margin-top:8px">
+                Você está na base. Treine, evolua e conquiste espaço.
+            </p>
+
+            <div style="margin-top:15px">
+                <span>Desenvolvimento</span>
+                <div class="progress">
+                    <div id="barra" style="width:25%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📌 Próximos acontecimentos</h3>
+
+            <div class="event">
+                <span>Treino da base</span>
+                <span class="good">Hoje</span>
+            </div>
+
+            <div class="event">
+                <span>Treino profissional</span>
+                <span>Em 3 dias</span>
+            </div>
+
+            <div class="event">
+                <span>Jogo da categoria</span>
+                <span>Em 7 dias</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📰 Notícias</h3>
+            <p id="noticia" style="margin-top:10px;color:#b9c3bc">
+                Seu olheiro acompanha sua evolução na base.
+            </p>
+        </div>
+    </div>
+
+    <!-- TREINO -->
+    <div id="treino" class="section">
+
+        <div class="card">
+            <h2>🏃 Centro de Treinamento</h2>
+            <p style="color:#9da89f;margin:8px 0 18px">
+                Escolha um treinamento para desenvolver seu jogador.
+            </p>
+
+            <button onclick="treino('finalização')">🎯 Finalização</button>
+            <br><br>
+            <button onclick="treino('drible')">⚡ Drible e obstáculos</button>
+            <br><br>
+            <button onclick="treino('físico')">💪 Treino profissional</button>
+
+            <p id="resultadoTreino" style="margin-top:18px"></p>
+        </div>
+    </div>
+
+    <!-- CALENDÁRIO -->
+    <div id="calendario" class="section">
+
+        <div class="card">
+            <h2>📅 Calendário</h2>
+            <p style="color:#9da89f;margin-top:5px">
+                Próximos compromissos da carreira
+            </p>
+
+            <div class="calendar" id="calendarioGrid"></div>
+        </div>
+    </div>
+
+    <!-- CONVERSAS -->
+    <div id="conversas" class="section">
+
+        <div class="card">
+            <h2>💬 Conversas</h2>
+
+            <select id="npc">
+                <option value="olheiro">Olheiro</option>
+                <option value="agente">Agente</option>
+            </select>
+
+            <div class="chat" id="chat">
+                <div class="message npc">
+                    Olá! Estou acompanhando seu desenvolvimento. Como você está?
+                </div>
+            </div>
+
+            <input id="mensagem" placeholder="Digite uma mensagem...">
+            <button onclick="enviarMensagem()">ENVIAR</button>
+        </div>
+    </div>
+
+</section>
+
+</div>
+
+<script>
+
+let jogador = {
+    nome:"",
+    sexo:"",
+    clube:"",
+    idade:15,
+    overall:58,
+    potencial:82,
+    temporada:1,
+    dia:1,
+    mes:1
+};
+
+let clubeSelecionado="";
+
+function mostrarCriacao(){
+    esconderTodas();
+    document.getElementById("criacao").classList.add("active");
+}
+
+function selecionarClube(elemento,nome){
+    document.querySelectorAll(".club").forEach(c=>c.classList.remove("selected"));
+    elemento.classList.add("selected");
+    clubeSelecionado=nome;
+}
+
+function começarCarreira(){
+
+    let nome=document.getElementById("nome").value.trim();
+
+    if(!nome){
+        alert("Digite o nome do jogador.");
+        return;
+    }
+
+    if(!clubeSelecionado){
+        alert("Escolha um clube.");
+        return;
+    }
+
+    jogador.nome=nome;
+    jogador.sexo=document.getElementById("sexo").value;
+    jogador.clube=clubeSelecionado;
+
+    document.getElementById("playerName").innerText=jogador.nome;
+    document.getElementById("clubName").innerText=jogador.clube+" • Categoria de base";
+
+    esconderTodas();
+    document.getElementById("carreira").classList.add("active");
+
+    atualizarTela();
+    criarCalendario();
+}
+
+function esconderTodas(){
+
+    document.querySelectorAll(".section").forEach(s=>{
+        s.classList.remove("active");
+    });
+}
+
+function abrirAba(nome){
+
+    document.querySelectorAll("#carreira > .section").forEach(s=>{
+        s.classList.remove("active");
+    });
+
+    document.getElementById(nome).classList.add("active");
+}
+
+function atualizarTela(){
+
+    document.getElementById("idade").innerText=jogador.idade;
+    document.getElementById("overall").innerText=jogador.overall;
+    document.getElementById("potencial").innerText=jogador.potencial;
+    document.getElementById("temporada").innerText=jogador.temporada;
+
+    let progresso=Math.min(100,25+(jogador.overall-58)*4);
+    document.getElementById("barra").style.width=progresso+"%";
+
+    document.getElementById("headerInfo").innerText=
+        jogador.nome+" • "+jogador.idade+" anos • "+jogador
