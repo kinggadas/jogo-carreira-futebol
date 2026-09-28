@@ -524,84 +524,113 @@ label{
 
 <script>
 
-let jogador = {
-    nome:"",
-    sexo:"",
-    clube:"",
-    idade:15,
-    overall:58,
-    potencial:82,
-    temporada:1,
-    dia:1,
-    mes:1
-};
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-let clubeSelecionado="";
+    const inicio = document.getElementById("inicio");
+    const criacao = document.getElementById("criacao");
+    const carreira = document.getElementById("carreira");
 
-function mostrarCriacao(){
-    esconderTodas();
-    document.getElementById("criacao").classList.add("active");
-}
+    let clubeSelecionado = "";
 
-function selecionarClube(elemento,nome){
-    document.querySelectorAll(".club").forEach(c=>c.classList.remove("selected"));
-    elemento.classList.add("selected");
-    clubeSelecionado=nome;
-}
+    let jogador = {
+        nome: "",
+        sexo: "",
+        clube: "",
+        idade: 15,
+        overall: 58,
+        potencial: 82,
+        temporada: 1,
+        mes: 1,
+        dia: 1
+    };
 
-function começarCarreira(){
+    function mostrar(secao) {
+        document.querySelectorAll(".section").forEach(function (el) {
+            el.classList.remove("active");
+        });
 
-    let nome=document.getElementById("nome").value.trim();
-
-    if(!nome){
-        alert("Digite o nome do jogador.");
-        return;
+        secao.classList.add("active");
+        window.scrollTo(0, 0);
     }
 
-    if(!clubeSelecionado){
-        alert("Escolha um clube.");
-        return;
-    }
+    window.mostrarCriacao = function () {
+        mostrar(criacao);
+    };
 
-    jogador.nome=nome;
-    jogador.sexo=document.getElementById("sexo").value;
-    jogador.clube=clubeSelecionado;
+    window.selecionarClube = function (elemento, nome) {
+        document.querySelectorAll(".club").forEach(function (clube) {
+            clube.classList.remove("selected");
+        });
 
-    document.getElementById("playerName").innerText=jogador.nome;
-    document.getElementById("clubName").innerText=jogador.clube+" • Categoria de base";
+        elemento.classList.add("selected");
+        clubeSelecionado = nome;
+    };
 
-    esconderTodas();
-    document.getElementById("carreira").classList.add("active");
+    window.começarCarreira = function () {
 
-    atualizarTela();
-    criarCalendario();
-}
+        const nome = document.getElementById("nome").value.trim();
+        const sexo = document.getElementById("sexo").value;
 
-function esconderTodas(){
+        if (nome === "") {
+            alert("Digite o nome do jogador.");
+            return;
+        }
 
-    document.querySelectorAll(".section").forEach(s=>{
-        s.classList.remove("active");
-    });
-}
+        if (clubeSelecionado === "") {
+            alert("Escolha um clube para começar.");
+            return;
+        }
 
-function abrirAba(nome){
+        jogador.nome = nome;
+        jogador.sexo = sexo;
+        jogador.clube = clubeSelecionado;
 
-    document.querySelectorAll("#carreira > .section").forEach(s=>{
-        s.classList.remove("active");
-    });
+        document.getElementById("playerName").textContent = jogador.nome;
+        document.getElementById("clubName").textContent =
+            jogador.clube + " • Categoria de base";
 
-    document.getElementById(nome).classList.add("active");
-}
+        document.getElementById("headerInfo").textContent =
+            jogador.nome + " • 15 anos • " + jogador.clube;
 
-function atualizarTela(){
+        document.getElementById("idade").textContent = jogador.idade;
+        document.getElementById("overall").textContent = jogador.overall;
+        document.getElementById("potencial").textContent = jogador.potencial;
+        document.getElementById("temporada").textContent = jogador.temporada;
 
-    document.getElementById("idade").innerText=jogador.idade;
-    document.getElementById("overall").innerText=jogador.overall;
-    document.getElementById("potencial").innerText=jogador.potencial;
-    document.getElementById("temporada").innerText=jogador.temporada;
+        mostrar(carreira);
+        criarCalendario();
 
-    let progresso=Math.min(100,25+(jogador.overall-58)*4);
-    document.getElementById("barra").style.width=progresso+"%";
+        alert("Carreira iniciada com sucesso!");
+    };
 
-    document.getElementById("headerInfo").innerText=
-        jogador.nome+" • "+jogador.idade+" anos • "+jogador
+    window.abrirAba = function (nome) {
+
+        document.querySelectorAll("#carreira > .section").forEach(function (el) {
+            el.classList.remove("active");
+        });
+
+        const aba = document.getElementById(nome);
+
+        if (aba) {
+            aba.classList.add("active");
+        }
+    };
+
+    window.treino = function (tipo) {
+
+        if (jogador.overall < jogador.potencial) {
+            jogador.overall++;
+        }
+
+        document.getElementById("overall").textContent =
+            jogador.overall;
+
+        document.getElementById("resultadoTreino").innerHTML =
+            "<span class='good'>✓ Treino concluído!</span><br>" +
+            "Seu overall agora é " + jogador.overall + ".";
+    };
+
+    window.avancar = function (periodo) {
+
+        if (
