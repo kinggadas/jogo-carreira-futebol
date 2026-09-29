@@ -4,330 +4,182 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Modo Carreira</title>
-
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    background: #07100a;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-
-header {
-    background: #102017;
-    padding: 18px;
-    text-align: center;
-}
-
-main {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-}
-
-.tela {
-    background: #101a13;
-    border: 1px solid #2b4031;
-    border-radius: 18px;
-    padding: 25px;
-    margin-top: 20px;
-}
-
-h1 {
-    text-align: center;
-}
-
-h2 {
-    margin-top: 0;
-}
-
-p {
-    color: #aeb8b1;
-}
-
-button {
-    width: 100%;
-    padding: 16px;
-    margin-top: 12px;
-    border: 0;
-    border-radius: 10px;
-    background: #20c45a;
-    color: #041008;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-button:active {
-    transform: scale(0.98);
-}
-
-input, select {
-    width: 100%;
-    padding: 14px;
-    margin-top: 8px;
-    margin-bottom: 15px;
-    border-radius: 9px;
-    border: 1px solid #34483a;
-    background: #07100a;
-    color: white;
-    font-size: 16px;
-}
-
-.clube {
-    border: 1px solid #34483a;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.clube.selecionado {
-    border: 2px solid #20c45a;
-    background: #16301e;
-}
-
-.escondido {
-    display: none;
-}
-
-.status {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-.status div {
-    background: #09120c;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.status strong {
-    display: block;
-    font-size: 24px;
-}
+*{box-sizing:border-box}body{margin:0;background:#07110a;color:#fff;font-family:Arial,sans-serif}button,input,select{font:inherit}.top{background:#0d1b11;border-bottom:1px solid #245d35;padding:16px;position:sticky;top:0;z-index:5}.top h1{margin:0;color:#42e879;font-size:22px}.top p{margin:5px 0 0;color:#9ca9a0;font-size:13px}.wrap{max-width:1100px;margin:auto;padding:16px}.screen{display:none}.screen.active{display:block}.card{background:#101c14;border:1px solid #244a2f;border-radius:14px;padding:16px;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:14px}.stat{background:#101c14;border:1px solid #244a2f;border-radius:10px;padding:10px}.stat small{color:#8f9b92}.stat b{display:block;font-size:18px;margin-top:4px}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}.nav button,.secondary{background:#1a2a1e;color:#fff}.btn,.nav button,.secondary{border:0;border-radius:9px;padding:11px;cursor:pointer}.btn{background:#35df70;color:#041008;font-weight:700}.blue{background:#287cff;color:#fff}.red{background:#d94a4a;color:#fff}.input{width:100%;background:#08100b;color:#fff;border:1px solid #31513a;border-radius:9px;padding:12px;margin:6px 0 12px}.bar{height:11px;background:#29352c;border-radius:20px;overflow:hidden;margin-top:5px}.bar i{display:block;height:100%;background:#39df70}.area.hidden{display:none}.message{background:#15261a;border-left:4px solid #35df70;border-radius:7px;padding:11px;margin-bottom:12px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.calday{min-height:50px;background:#17231a;border-radius:6px;padding:6px;font-size:12px}.calday.match{background:#18552c;border:2px solid #35df70}.calday.today{outline:2px solid #fff}.tag{display:inline-block;background:#203728;border-radius:20px;padding:5px 8px;font-size:12px;margin:3px}.simulation{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;z-index:20}.simulation.show{display:flex}.simbox{width:90%;max-width:420px;background:#101c14;border:1px solid #35df70;border-radius:15px;padding:22px;text-align:center}.simbar{height:16px;background:#29352c;border-radius:20px;overflow:hidden;margin:18px 0}.simbar i{display:block;height:100%;width:0;background:#35df70}.field{position:relative;max-width:850px;height:480px;margin:14px auto;background:#16833d;border:4px solid #fff;overflow:hidden}.half{position:absolute;left:50%;top:0;height:100%;width:2px;background:#fff}.circle{position:absolute;left:calc(50% - 58px);top:calc(50% - 58px);width:116px;height:116px;border:2px solid #fff;border-radius:50%}.boxL,.boxR{position:absolute;top:130px;width:85px;height:215px;border:2px solid #fff}.boxL{left:-2px}.boxR{right:-2px}.me{position:absolute;width:32px;height:32px;border-radius:50%;background:#ffd400;color:#111;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;z-index:2;transition:.35s}.ball{position:absolute;width:13px;height:13px;border-radius:50%;background:#fff;z-index:3;transition:.35s}.clock{text-align:center;color:#42e879;font-size:30px;font-weight:700}.score{text-align:center;font-size:24px;margin:7px}.events{height:125px;overflow:auto;background:#08100b;border-radius:8px;padding:9px}.events div{font-size:13px;padding:5px 0;border-bottom:1px solid #1b291f}.actions{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:10px}.actions button{border:0;border-radius:9px;padding:11px;cursor:pointer}.attrs div{margin:8px 0}.attrtop{display:flex;justify-content:space-between}.proposals .item{background:#17241a;border:1px solid #2b4832;border-radius:8px;padding:10px;margin-top:8px}
+/* CAMPO EQUIPE */
+.match-layout{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:12px;align-items:start}
+.field-wrap{background:#0c1710;border:1px solid #244a2f;border-radius:12px;padding:10px}
+.field{aspect-ratio:16/9;width:100%;height:auto;max-width:none;margin:0;background:repeating-linear-gradient(90deg,#177c3b 0,#177c3b 9%,#198342 9%,#198342 18%);border:4px solid #fff;overflow:hidden;position:relative;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15)}
+.field:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:#fff;transform:translateX(-50%)}
+.field:after{content:"";position:absolute;left:50%;top:50%;width:22%;aspect-ratio:1;border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%)}
+.boxL,.boxR{position:absolute;top:25%;width:14%;height:50%;border:2px solid #fff}
+.boxL{left:-2px}.boxR{right:-2px}
+.smallboxL,.smallboxR{position:absolute;top:35%;width:6%;height:30%;border:2px solid #fff}.smallboxL{left:-2px}.smallboxR{right:-2px}
+.penL,.penR{position:absolute;top:42%;width:4px;height:16px;background:#fff;border-radius:50%}.penL{left:14%}.penR{right:14%}
+.player-dot{position:absolute;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;border:2px solid rgba(255,255,255,.85);z-index:5;transform:translate(-50%,-50%);transition:left .18s,top .18s}
+.home-player{background:#e9e9e9;color:#111}.away-player{background:#d93b3b;color:#fff}.player-dot.user-player{background:#ffd400;color:#111;border:3px solid #fff;box-shadow:0 0 0 4px rgba(255,212,0,.35),0 0 14px rgba(255,212,0,.8);z-index:8}
+.ball{position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;border:1px solid #111;z-index:9;transition:left .22s,top .22s;transform:translate(-50%,-50%)}
+.bench-area{margin-top:8px;background:#15231a;border:1px solid #294633;border-radius:10px;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px}.bench{background:#0c140f;border-radius:8px;padding:8px}.bench h4{margin:0 0 5px;color:#42e879}.bench-list{display:flex;flex-wrap:wrap;gap:4px}.bench-player{background:#25372a;border-radius:6px;padding:4px 6px;font-size:10px}.coach{margin-top:6px;color:#ffd65a;font-size:11px}
+.lance-control{display:none;background:#17271c;border:1px solid #35df70;border-radius:10px;padding:10px;margin-top:8px}.lance-control.active{display:block}.control-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:190px;margin:8px auto}.control-grid button{padding:9px;background:#263c2c;color:#fff;border:0;border-radius:8px}.control-grid .up{grid-column:2}.control-grid .left{grid-column:1}.control-grid .down{grid-column:2}.control-grid .right{grid-column:3}.lance-actions{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}.lance-actions button{padding:9px;border:0;border-radius:8px;font-weight:700}.auto-badge{display:inline-block;background:#214a2d;color:#62ef8d;border-radius:20px;padding:5px 8px;font-size:11px}.match-side .card{margin-bottom:10px}.match-side h3{margin-bottom:8px}.mini-stat{display:flex;justify-content:space-between;margin:6px 0;color:#cfd7d1}
+.club-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:14px}.club-choice{background:#17251b;color:#fff;border:2px solid #294633;border-radius:11px;padding:13px;text-align:left;cursor:pointer;min-height:78px}.club-choice strong{display:block;font-size:14px}.club-choice span{display:block;color:#9eaaa2;font-size:12px;margin-top:5px}.club-choice.selected{border-color:#35df70;background:#193a24;box-shadow:0 0 0 1px #35df70}.club-choice:active{transform:scale(.98)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.nav{grid-template-columns:repeat(2,1fr)}.field{height:auto}.match-layout{grid-template-columns:1fr}.bench-area{grid-template-columns:1fr}.player-dot{width:19px;height:19px;font-size:7px}.match-side{display:block}}
 </style>
 </head>
-
 <body>
+<header class="top"><h1>âš½ MODO CARREIRA</h1><p id="topText">Comece sua carreira aos 15 anos.</p></header>
+<main class="wrap">
+<section id="createScreen" class="screen active">
+<div class="card"><h2>ðŸ‘¤ Criar jogador</h2><label>Nome</label><input id="name" class="input" placeholder="Seu nome"><label>Sexo</label><select id="gender" class="input"><option>Masculino</option><option>Feminino</option></select><label>NÃºmero da camisa</label><select id="number" class="input"></select><label>PÃ© dominante</label><select id="foot" class="input"><option>Direito</option><option>Esquerdo</option></select><h3 style="margin:12px 0 6px">ðŸŸï¸ Escolha sua equipe de formaÃ§Ã£o</h3><p style="color:#9ca9a0;font-size:13px;margin:0 0 10px">Escolha uma das quatro equipes. A equipe escolhida serÃ¡ sua equipe durante o inÃ­cio da carreira.</p><div id="clubChoices" class="club-grid"><button type="button" class="club-choice selected" data-club="Portsmouth FC"><strong>Portsmouth FC</strong><span>Inglaterra</span></button><button type="button" class="club-choice" data-club="Real Zaragoza"><strong>Real Zaragoza</strong><span>Espanha</span></button><button type="button" class="club-choice" data-club="FC Schalke 04"><strong>FC Schalke 04</strong><span>Alemanha</span></button><button type="button" class="club-choice" data-club="UC Sampdoria"><strong>UC Sampdoria</strong><span>ItÃ¡lia</span></button></div><input type="hidden" id="club" value="Portsmouth FC"><button id="startBtn" class="btn" type="button">âš½ COMEÃ‡AR CARREIRA</button></div>
+</section>
+<section id="careerScreen" class="screen">
+<div class="stats"><div class="stat"><small>Jogador</small><b id="uiName">-</b></div><div class="stat"><small>Idade</small><b id="uiAge">15</b></div><div class="stat"><small>Overall</small><b id="uiOverall">55</b></div><div class="stat"><small>Dia</small><b id="uiDay">1</b></div><div class="stat"><small>Clube</small><b id="uiClub">Base</b></div></div>
+<div id="message" class="message">VocÃª estÃ¡ na base. Desenvolva seu jogador.</div>
+<div class="nav"><button data-area="home">ðŸ  Principal</button><button data-area="training">ðŸ‹ï¸ Treino</button><button data-area="calendar">ðŸ“… CalendÃ¡rio</button><button data-area="staff">ðŸ”Ž Olheiro / EmpresÃ¡rio</button></div>
+<div id="homeArea" class="area">
+<div class="grid"><div class="card"><h2>ðŸ‘¤ Jogador</h2><p>Camisa: <b id="uiNumber">10</b></p><p>PÃ©: <b id="uiFoot">Direito</b></p><p>XP: <b id="uiXp">0 / 100</b></p><div class="bar"><i id="xpBar"></i></div><p>CansaÃ§o: <b id="uiFatigue">0%</b></p><div class="bar"><i id="fatigueBar"></i></div><p>Forma: <b id="uiForm">100%</b></p><div class="bar"><i id="formBar"></i></div></div>
+<div class="card"><h2>â© Simular tempo</h2><p>Escolha uma opÃ§Ã£o. A simulaÃ§Ã£o mostra o tempo passando.</p><button class="btn" data-days="1">1 DIA</button><br><button class="btn" data-days="7">1 SEMANA</button><br><button class="btn" data-days="30">1 MÃŠS</button><br><button class="btn" data-days="365">1 ANO</button></div></div>
+<div class="card"><h2>âš½ PrÃ³ximo jogo</h2><div id="nextMatch"></div></div>
+</div>
+<div id="trainingArea" class="area hidden"><div class="card"><h2>ðŸ‹ï¸ Treino</h2><p>Treinos disponÃ­veis hoje: <b id="trainingLeft">2</b></p><p>Treinos no mÃªs: <b id="monthTraining">0</b></p></div><div class="grid"><div class="card"><h3>ðŸŽ¯ FinalizaÃ§Ã£o</h3><p>Treino tÃ©cnico de finalizaÃ§Ã£o.</p><button class="btn train" data-type="finishing">TREINAR</button></div><div class="card"><h3>ðŸŽ¯ Passe</h3><p>PrecisÃ£o e visÃ£o de jogo.</p><button class="btn train" data-type="passing">TREINAR</button></div><div class="card"><h3>ðŸ•º Drible</h3><p>Controle e conduÃ§Ã£o.</p><button class="btn train" data-type="dribbling">TREINAR</button></div><div class="card"><h3>ðŸƒ Velocidade</h3><p>Treino fÃ­sico.</p><button class="btn train" data-type="speed">TREINAR</button></div></div><div class="card"><h2>ðŸ“ˆ Atributos</h2><div id="attributes" class="attrs"></div></div></div>
+<div id="calendarArea" class="area hidden"><div class="card"><h2>ðŸ“… CalendÃ¡rio</h2><p id="calendarTitle"></p><div id="calendar" class="calendar"></div><p><span class="tag">ðŸŸ¢ Jogo</span><span class="tag">âšª Dia normal</span></p></div></div>
+<div id="staffArea" class="area hidden"><div class="grid"><div class="card"><h2>ðŸ”Ž Olheiro</h2><button class="btn scout" data-q="status">Como estou?</button><br><button class="secondary scout" data-q="clubs">Tem clube interessado?</button><br><button class="secondary scout" data-q="future">Como estÃ¡ meu futuro?</button><div id="scoutReply" class="message" style="margin-top:10px">Estou acompanhando sua evoluÃ§Ã£o.</div></div><div class="card"><h2>ðŸ¤ EmpresÃ¡rio</h2><p>Posso verificar oportunidades compatÃ­veis com sua carreira.</p><button id="offersBtn" class="btn blue">VER PROPOSTAS</button><div id="offers" class="proposals"></div></div></div></div>
+</section>
+<section id="matchScreen" class="screen">
+<div class="card">
+  <div class="clock" id="matchClock">00:00</div>
+  <div id="matchStatus" style="text-align:center;margin:5px 0;color:#9fb2a4"><span class="auto-badge">SIMULAÃ‡ÃƒO AUTOMÃTICA</span></div>
+  <div id="score" class="score">Meu Clube 0 x 0 AdversÃ¡rio</div>
 
-<header>
-    <h1>⚽ MODO CARREIRA</h1>
-</header>
-
-<main>
-
-    <section id="telaInicio" class="tela">
-        <h2>Bem-vindo ao Modo Carreira</h2>
-        <p>
-            Comece sua carreira aos 15 anos e tente chegar ao topo do futebol.
-        </p>
-
-        <button id="botaoIniciar" type="button">
-            INICIAR CARREIRA
-        </button>
-    </section>
-
-
-    <section id="telaCriacao" class="tela escondido">
-
-        <h2>👤 Criar jogador</h2>
-
-        <label>Nome do jogador</label>
-        <input id="nomeJogador" type="text" placeholder="Digite seu nome">
-
-        <label>Sexo</label>
-        <select id="sexoJogador">
-            <option value="Masculino">Masculino</option>
-            <option value="Feminino">Feminino</option>
-        </select>
-
-        <p>Idade inicial: <strong>15 anos</strong></p>
-
-        <h3>Escolha sua equipe da base</h3>
-
-        <div class="clube" data-clube="Blackburn Rovers">
-            🏴 Blackburn Rovers
-            <br>
-            <small>Championship • Inglaterra</small>
+  <div class="card" style="margin-bottom:12px;text-align:center">
+<h2>âš½ PARTIDA</h2>
+<p><b id="matchMyTeam">Minha equipe</b> &nbsp; x &nbsp; <b id="matchOpponent">AdversÃ¡rio</b></p>
+</div>
+<div class="match-layout">
+    <div>
+      <div class="field-wrap">
+        <div id="field" class="field">
+          <div class="half"></div><div class="circle"></div>
+          <div class="boxL"></div><div class="boxR"></div>
+          <div class="smallboxL"></div><div class="smallboxR"></div>
+          <div class="penL"></div><div class="penR"></div>
+          <div id="ball" class="ball" style="left:50%;top:50%"></div>
+          <div id="homePlayers"></div>
+          <div id="awayPlayers"></div>
         </div>
-
-        <div class="clube" data-clube="Middlesbrough">
-            🏴 Middlesbrough
-            <br>
-            <small>Championship • Inglaterra</small>
+        <div class="bench-area">
+          <div class="bench"><h4>ðŸ  Seu banco</h4><div id="homeBench" class="bench-list"></div><div class="coach">ðŸ‘” TÃ©cnico: ComissÃ£o tÃ©cnica</div></div>
+          <div class="bench"><h4>ðŸšŒ Banco adversÃ¡rio</h4><div id="awayBench" class="bench-list"></div><div class="coach">ðŸ‘” TÃ©cnico: ComissÃ£o tÃ©cnica</div></div>
         </div>
+      </div>
 
-        <div class="clube" data-clube="Real Zaragoza">
-            🇪🇸 Real Zaragoza
-            <br>
-            <small>2ª divisão • Espanha</small>
+      <div id="lanceControl" class="lance-control">
+        <b id="lanceTitle">ðŸ”¥ LANCE!</b>
+        <p id="lanceText" style="margin:5px 0;color:#c9d4cc">VocÃª tem controle do seu jogador.</p>
+        <div class="control-grid">
+          <button class="up" data-move="up">â¬†ï¸</button>
+          <button class="left" data-move="left">â¬…ï¸</button>
+          <button class="down" data-move="down">â¬‡ï¸</button>
+          <button class="right" data-move="right">âž¡ï¸</button>
         </div>
-
-        <div class="clube" data-clube="Real Oviedo">
-            🇪🇸 Real Oviedo
-            <br>
-            <small>2ª divisão • Espanha</small>
+        <div class="lance-actions">
+          <button class="btn blue" id="shootBtn">âš½ FINALIZAR</button>
+          <button class="secondary" id="lancePassBtn">ðŸŽ¯ PASSAR</button>
+          <button class="btn" id="continueBtn">â–¶ CONTINUAR</button>
         </div>
+      </div>
+    </div>
 
-        <button id="botaoCriar" type="button">
-            COMEÇAR CARREIRA
-        </button>
-
-    </section>
-
-
-    <section id="telaCarreira" class="tela escondido">
-
-        <h2 id="nomeExibido">Jogador</h2>
-
-        <p id="clubeExibido">Clube</p>
-
-        <div class="status">
-
-            <div>
-                <strong id="idadeExibida">15</strong>
-                Idade
-            </div>
-
-            <div>
-                <strong id="overallExibido">58</strong>
-                Overall
-            </div>
-
-        </div>
-
-        <button id="botaoTreino" type="button">
-            🏃 TREINAR
-        </button>
-
-        <button id="botaoAvancar" type="button">
-            ⏩ AVANÇAR 1 DIA
-        </button>
-
-        <p id="mensagem"></p>
-
-    </section>
-
+    <div class="match-side">
+      <div class="card"><h3>ðŸ“‹ Lances</h3><div id="events" class="events"></div></div>
+      <div class="card">
+        <h3>ðŸ“Š Sua atuaÃ§Ã£o</h3>
+        <div class="mini-stat"><span>Nota</span><b id="matchRating">6.0</b></div>
+        <div class="mini-stat"><span>XP</span><b id="matchXp">0</b></div>
+        <div class="mini-stat"><span>PosiÃ§Ã£o</span><b>Jogador</b></div>
+      </div>
+      <button id="leaveBtn" class="btn red" style="width:100%">SAIR DA PARTIDA</button>
+    </div>
+  </div>
+</div>
+</section>
 </main>
+<div id="simulation" class="simulation"><div class="simbox"><h2 id="simTitle">Simulando...</h2><p id="simText">Preparando...</p><div class="simbar"><i id="simBar"></i></div><b id="simPercent">0%</b></div></div>
+<script>'use strict';
 
-<script>
+const player={name:'',gender:'',number:10,foot:'Direito',age:15,day:1,club:'Base',xp:0,xpMax:100,overall:55,fatigue:0,form:100,trainingToday:0,trainingMonth:0,attrs:{finishing:52,passing:54,dribbling:53,speed:55,strength:52,defense:48},matchPlayed:false};
+let scheduledOpponent='';
+const clubs=['AtlÃ©tico Aurora','Real Montesa','Manchester Crown','London Athletic','Bavaria 04','Paris Saint-Royal','Milano Sporting','Lisboa FC','Porto AtlÃ¢ntico','Amsterdam United','Rio Imperial','SÃ£o Paulo Athletic','Belo Horizonte FC','Buenos Aires Athletic','Madrid Central','Valencia Sporting','Torino Calcio','London City FC','Munich Royals','Porto Real','Andaluzia FC','Catalunya Athletic','Braga Norte','Northbridge City','Riverside FC','Kingsport Athletic'];
+const labels={finishing:'FinalizaÃ§Ã£o',passing:'Passe',dribbling:'Drible',speed:'Velocidade',strength:'ForÃ§a',defense:'Defesa'};
+const $=id=>document.getElementById(id);
+let simulationRunning=false;
+let match={active:false,minute:0,second:0,home:0,away:0,rating:6,ended:false,opponent:'',timer:null,lanceActive:false,lanceTimer:null,playerX:50,playerY:50,xpEarned:0};
 
-let clubeEscolhido = "";
+for(let n=1;n<=99;n++){const o=document.createElement('option');o.value=n;o.textContent=n;if(n===10)o.selected=true;$('number').appendChild(o);}
 
-let jogador = {
-    nome: "",
-    sexo: "",
-    clube: "",
-    idade: 15,
-    overall: 58
-};
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');}
+function showArea(name){document.querySelectorAll('.area').forEach(a=>a.classList.add('hidden'));$(name+'Area').classList.remove('hidden');}
+function message(text){$('message').textContent=text;}
+function randomClub(exclude=''){const options=clubs.filter(c=>c!==exclude);return options[Math.floor(Math.random()*options.length)];}
+function isMatchDay(){return player.day%14===0;}
 
+function startCareer(){
+  const nameEl=$('name');
+  const name=nameEl ? nameEl.value.trim() : '';
+  if(!name){
+    alert('Digite o nome do jogador.');
+    if(nameEl) nameEl.focus();
+    return;
+  }
 
-const telaInicio = document.getElementById("telaInicio");
-const telaCriacao = document.getElementById("telaCriacao");
-const telaCarreira = document.getElementById("telaCarreira");
+  const clubEl=$('club');
+  const selectedClub=clubEl ? clubEl.value : '';
+  if(!selectedClub){
+    alert('Escolha uma equipe antes de comeÃ§ar a carreira.');
+    return;
+  }
 
-const botaoIniciar = document.getElementById("botaoIniciar");
-const botaoCriar = document.getElementById("botaoCriar");
+  player.name=name;
+  player.gender=$('gender').value;
+  player.number=Number($('number').value)||10;
+  player.foot=$('foot').value;
+  player.club=selectedClub;
+  player.day=1;
+  player.age=15;
+  player.xp=0;
+  player.xpMax=100;
+  player.overall=55;
+  player.fatigue=0;
+  player.form=100;
+  player.trainingToday=0;
+  player.trainingMonth=0;
+  player.matchPlayed=false;
+  scheduledOpponent='';
+  match.opponent='';
 
+  showScreen('careerScreen');
+  showArea('home');
+  updateAll();
+  message('âœ… Carreira iniciada aos 15 anos no '+player.club+'.');
+}
 
-// BOTÃO INICIAR
-botaoIniciar.addEventListener("click", function() {
-
-    telaInicio.classList.add("escondido");
-
-    telaCriacao.classList.remove("escondido");
-
-});
-
-
-// ESCOLHER CLUBE
-document.querySelectorAll(".clube").forEach(function(clube) {
-
-    clube.addEventListener("click", function() {
-
-        document.querySelectorAll(".clube").forEach(function(c) {
-            c.classList.remove("selecionado");
-        });
-
-        clube.classList.add("selecionado");
-
-        clubeEscolhido = clube.dataset.clube;
-
-    });
-
-});
-
-
-// COMEÇAR CARREIRA
-botaoCriar.addEventListener("click", function() {
-
-    const nome = document.getElementById("nomeJogador").value.trim();
-
-    if (nome === "") {
-        alert("Digite o nome do jogador.");
-        return;
-    }
-
-    if (clubeEscolhido === "") {
-        alert("Escolha um clube.");
-        return;
-    }
-
-    jogador.nome = nome;
-
-    jogador.sexo =
-        document.getElementById("sexoJogador").value;
-
-    jogador.clube = clubeEscolhido;
-
-    document.getElementById("nomeExibido").textContent =
-        jogador.nome;
-
-    document.getElementById("clubeExibido").textContent =
-        jogador.clube + " • Categoria de base";
-
-    telaCriacao.classList.add("escondido");
-
-    telaCarreira.classList.remove("escondido");
-
-    document.getElementById("mensagem").textContent =
-        "Carreira iniciada! Você tem 15 anos e está começando na base.";
-
-});
-
-
-// TREINAR
-document.getElementById("botaoTreino").addEventListener("click", function() {
-
-    if (jogador.overall < 82) {
-        jogador.overall++;
-    }
-
-    document.getElementById("overallExibido").textContent =
-        jogador.overall;
-
-    document.getElementById("mensagem").textContent =
-        "Treino concluído! Seu overall aumentou.";
-
-});
-
-
-// AVANÇAR
-document.getElementById("botaoAvancar").addEventListener("click", function() {
-
-    document.getElementById("mensagem").textContent =
-        "Você avançou 1 dia na carreira.";
-
-});
-
-</script>
-
-</body>
-</html>
+/* SISTEMA DE BOTÃ•ES â€” DELEGAÃ‡ÃƒO CENTRALIZADA E SEM DUPLICAÃ‡ÃƒO */
+let buttonLock=false;
+function runButton(action,button){
+  if(buttonLock && action!=='continue') return;
+  if(button && (button.disabled || button.dataset.busy==='1')) return;
+  if(button) button.dataset.busy='1';
+  if(action==='start-career') startCareer();
+  else if(action==='play-match') openMatch();
+  else if(action==='continue') continueFromLance();
+  else if(action==='leave-match') leaveMatch();
+  else if(action==='offers') offers();
+  else if(action==='next-match') goToNextMatch();
+  else if(action==='shoot') playerAction('attack');
+  else if(action==='pass') playerAction('pass');
+  else if(action==='move'){const m=button.dataset.move;if(m==='up')moveUser(0,-4);if(m==='down')moveUser(0,4);if(m==='left')moveUser(-4,0);if(m==='right')moveUser(4,0);}
+  else if(action==='area') showArea(button.dataset.area);
+  else if(action==='simulate') simulate(Number(button.dataset.days));
+  else if(action==='train') train(button.dataset.type);
+  else if(action==='scout') scout(button.dataset.q);
+  else if(action==='club'){document.querySelectorAll('.club-choice').forEach(b=>b.classList.remove('selected'));button.classList.add('selected');$('club').value=button.dataset.club;}
+  else if(action==='accept'){const club=button.dataset.club;if(club){player.club=club;message('ðŸ¤ VocÃª aceitou a oportunidade do '+club+'.');$('offers').innerHTML='<div class
